@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Students</title>
+</head>
+<body>
+    <h1>Registered Students</h1>
+    {% if students %}
+        {% for student in students %}
+            {% if student %}
+                <ul>
+                    <li>{{student[0]}} of {{student[1]}} is {{student[2]}}</li>
+                </ul>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <h2>No Students</h2>
+    {% endif %}
+        
+</body>
+</html>
