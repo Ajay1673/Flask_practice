@@ -1,4 +1,11 @@
 {% extends 'homepage.html' %}
 {% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <h1>Hi {{name}}</h1>
 {% endblock %}

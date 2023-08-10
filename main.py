@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request, session
+from flask import Flask, render_template, url_for, redirect, request, session, flash
 from datetime import timedelta
 
 
@@ -16,12 +16,15 @@ def login():
         session.permanent = True
         user = request.form["name"]
         session["user"] = user
+        flash("Login Successful!")
         return redirect(url_for("userpage"))
     else:
         if "user" in session:
+            flash("Already Logged in!")
             return redirect(url_for("userpage"))
-        #return redirect(url_for("user",name=user))
-        return render_template("login.html")
+        else:
+            #return redirect(url_for("user",name=user))
+            return render_template("login.html")
 
 # @app.route("/<name>")
 # def user(name)
@@ -32,14 +35,17 @@ def userpage():
     if "user" in session:
         user=session["user"]
         print(session)
-        return f"<h1>{user}</h1>"
+        return render_template("user.html",name=user)
     else:
+        flash("You not logged your name")
         return redirect(url_for("login"))
     
 @app.route("/logout")
 def logout():
-    session.pop("user",None)
-    print(session)
+    if "user" in session:
+        session.pop("user",None)
+        flash("You have logged out!") 
+        print(session)
     return redirect(url_for("login"))
 
 if __name__ == "__main__":
